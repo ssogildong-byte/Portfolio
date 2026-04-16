@@ -221,6 +221,21 @@
 
     .intro-text input::placeholder { color: rgba(255,255,255,0.3); }
 
+    .underline-text {
+      margin: 0;
+      padding: 2px 0;
+      border-bottom: 1px solid var(--accent);
+      width: 100%;
+    }
+
+    .underline-text-white {
+      margin: 0;
+      padding: 2px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      width: 100%;
+      color: var(--white);
+    }
+
     .keywords {
       display: flex;
       gap: 3mm;
@@ -460,7 +475,7 @@
 </head>
 <body>
 
-<button class="print-btn" onclick="window.print()">PDF 저장 →</button>
+<!--<button class="print-btn" onclick="window.print()">PDF 저장 →</button>-->
 
 <!-- 표지 -->
 <div class="page cover">
@@ -484,15 +499,15 @@
   <div class="cover-info-grid">
     <div class="cover-info-item">
       <label>Name</label>
-      <input type="text" placeholder="이소영">
+      <p class="underline-text">이소영</p>
     </div>
     <div class="cover-info-item">
       <label>Contact</label>
-      <input type="text" placeholder="010-7356-0250">
+      <p class="underline-text">010-7356-0250</p>
     </div>
     <div class="cover-info-item">
       <label>Email</label>
-      <input type="text" placeholder="soyoung0985@naver.com">
+      <p class="underline-text">soyoung0985@naver.com</p>
     </div>
   </div>
 </div>
@@ -507,14 +522,18 @@
       <span class="section-title">나를 한눈에</span>
       <div class="section-line"></div>
     </div>
-
-    <div class="intro-box">
+    <div style="display : flex; align-items: flex-start; gap: 16px; margin-bottom:12px;">
+      <img src="img/이소영 프로필.jpg" alt="userProfile" style="width:90px; height: 90px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); flex-shrink: 0;">
+    <div class="intro-box" style="margin-bottom: 0; flex: 1;">
       <div class="intro-text">
-        <input type="text" placeholder="콘텐츠 소비자와 직접 소통했던 경험을 살려, 화면 밖 너머까지 콘텐츠를 전달하겠습니다.">
+        <p class="underline-text-white">콘텐츠 소비자와 직접 소통했던 경험을 살려, 화면 밖 너머까지 콘텐츠를 전달하겠습니다.</p>
       </div>
     </div>
+      </div>
 
     <div class="keywords">
+      <span class="keyword"># 책임감 </span>
+      <span class="keyword"># 도전정신 </span>
       <span class="keyword"># 현장감</span>
       <span class="keyword"># 영상편집</span>
       <span class="keyword"># 콘텐츠기획</span>
@@ -642,6 +661,17 @@
           </a>
         </div>
       </div>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; margin-top: 8px;">
+      <a href="https://youtu.be/6aFXClKdunw?si=1tGzxq5gpYK_Yu2Q" target="_blank">
+      <img src="img/1.png" alt="작업물1" style="width: 100%; aspect-ratio: 16/9; object-fit: cover;">
+      </a>
+      <a href="https://youtu.be/ygjmBht5y7c?si=0pykGeg1XVRgRGAl" target="_blank">
+      <img src="img/2.png" alt="작업물2" style="width: 100%; aspect-ratio: 16/9; object-fit: cover;">
+      </a>
+      <a href="https://youtube.com/shorts/5UZUMVB_vsk?si=GaJMeU24pG8b_fRl" target="_blank">
+      <img src="img/3.png" alt="작업물3" style="width: 100%; aspect-ratio: 16/9; object-fit: cover;">
+      </a>
     </div>
   </div>
 
