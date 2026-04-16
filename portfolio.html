@@ -1,10 +1,687 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <title>$Title$</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f2ee;
+      --accent: #c8a96e;
+      --gray: #6b6b6b;
+      --light: #e8e4df;
+    }
+
+    body {
+      background: var(--white);
+      font-family: 'Noto Sans KR', sans-serif;
+      color: var(--black);
+    }
+
+    .page {
+      width: 210mm;
+      min-height: 297mm;
+      margin: 0 auto;
+      padding: 14mm 16mm;
+      background: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 표지 */
+    .cover {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 297mm;
+      padding: 14mm 16mm;
+    }
+
+    .cover-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .cover-label {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gray);
+      font-weight: 300;
+    }
+
+    .cover-year {
+      font-size: 10px;
+      letter-spacing: 2px;
+      color: var(--gray);
+      font-weight: 300;
+    }
+
+    .cover-center {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 20mm 0;
+    }
+
+    .cover-position {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 11px;
+      letter-spacing: 6px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+
+    .cover-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 72px;
+      line-height: 0.95;
+      color: var(--black);
+      margin-bottom: 6mm;
+    }
+
+    .cover-title em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .cover-divider {
+      width: 60px;
+      height: 2px;
+      background: var(--black);
+      margin: 6mm 0;
+    }
+
+    .cover-subtitle {
+      font-size: 12px;
+      color: var(--gray);
+      font-weight: 300;
+      letter-spacing: 1px;
+      line-height: 1.8;
+    }
+
+    .cover-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 8mm;
+      border-top: 1px solid var(--black);
+      padding-top: 6mm;
+    }
+
+    .cover-info-item label {
+      display: block;
+      font-size: 8px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gray);
+      margin-bottom: 4px;
+      font-weight: 400;
+    }
+
+    .cover-info-item input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--accent);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 12px;
+      color: var(--black);
+      padding: 2px 0;
+      outline: none;
+    }
+
+    .cover-info-item input::placeholder {
+      color: #ccc;
+      font-size: 11px;
+    }
+
+    /* 페이지 구분선 */
+    .page-break {
+      page-break-before: always;
+    }
+
+    /* 섹션 공통 */
+    .section {
+      margin-bottom: 10mm;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5mm;
+    }
+
+    .section-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      color: var(--accent);
+      line-height: 1;
+    }
+
+    .section-title {
+      font-family: 'DM Serif Display', serif;
+      font-size: 20px;
+      color: var(--black);
+      line-height: 1;
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--light);
+    }
+
+    /* 나를 한눈에 */
+    .intro-box {
+      background: var(--black);
+      color: var(--white);
+      padding: 8mm;
+      margin-bottom: 5mm;
+      position: relative;
+    }
+
+    .intro-box::before {
+      content: '"';
+      font-family: 'DM Serif Display', serif;
+      font-size: 80px;
+      color: var(--accent);
+      position: absolute;
+      top: -5px;
+      left: 6mm;
+      line-height: 1;
+      opacity: 0.4;
+    }
+
+    .intro-text {
+      font-size: 13px;
+      line-height: 1.9;
+      font-weight: 300;
+      padding-left: 8mm;
+    }
+
+    .intro-text input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.3);
+      color: var(--white);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      width: 100%;
+      outline: none;
+      padding: 2px 0;
+    }
+
+    .intro-text input::placeholder { color: rgba(255,255,255,0.3); }
+
+    .keywords {
+      display: flex;
+      gap: 3mm;
+      flex-wrap: wrap;
+    }
+
+    .keyword {
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      font-size: 10px;
+      letter-spacing: 2px;
+      padding: 3px 10px;
+      font-weight: 500;
+    }
+
+    /* 경험 카드 */
+    .exp-card {
+      display: grid;
+      grid-template-columns: 28mm 1fr;
+      gap: 5mm;
+      margin-bottom: 5mm;
+      padding-bottom: 5mm;
+      border-bottom: 1px solid var(--light);
+    }
+
+    .exp-card:last-child {
+      border-bottom: none;
+    }
+
+    .exp-date {
+      font-size: 9px;
+      color: var(--gray);
+      letter-spacing: 1px;
+      line-height: 1.6;
+      padding-top: 2px;
+    }
+
+    .exp-date strong {
+      display: block;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 14px;
+      color: var(--accent);
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+
+    .exp-content h3 {
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 2mm;
+      color: var(--black);
+    }
+
+    .exp-content p {
+      font-size: 10.5px;
+      color: var(--gray);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .exp-tags {
+      display: flex;
+      gap: 2mm;
+      flex-wrap: wrap;
+      margin-top: 2mm;
+    }
+
+    .exp-tag {
+      background: var(--light);
+      font-size: 9px;
+      padding: 2px 7px;
+      color: var(--gray);
+      letter-spacing: 0.5px;
+    }
+
+    /* 역량 */
+    .skill-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4mm;
+    }
+
+    .skill-item {
+      border-left: 3px solid var(--accent);
+      padding: 3mm 4mm;
+      background: var(--light);
+    }
+
+    .skill-item h4 {
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 1mm;
+    }
+
+    .skill-item p {
+      font-size: 9.5px;
+      color: var(--gray);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* 작업물 */
+    .work-box {
+      background: var(--black);
+      padding: 6mm 8mm;
+      display: flex;
+      align-items: center;
+      gap: 8mm;
+    }
+
+    .work-qr {
+      width: 28mm;
+      height: 28mm;
+      border: 2px solid var(--accent);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+
+    .work-qr img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .work-qr input {
+      background: transparent;
+      border: none;
+      color: rgba(255,255,255,0.4);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 8px;
+      text-align: center;
+      width: 100%;
+      outline: none;
+    }
+
+    .work-desc h4 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 16px;
+      color: var(--white);
+      margin-bottom: 2mm;
+    }
+
+    .work-desc p {
+      font-size: 9.5px;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.8;
+      font-weight: 300;
+    }
+
+    .work-url {
+      margin-top: 2mm;
+    }
+
+    .work-url input {
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--accent);
+      color: var(--accent);
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 10px;
+      width: 100%;
+      outline: none;
+      padding: 2px 0;
+    }
+
+    .work-url a{
+      color: var(--accent) !important;
+      font-size: 12px;
+      text-decoration: underline;
+    }
+
+    /* 자격 */
+    .cert-list {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3mm;
+    }
+
+    .cert-item {
+      display: flex;
+      align-items: center;
+      gap: 3mm;
+      padding: 3mm;
+      border: 1px solid var(--light);
+    }
+
+    .cert-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .cert-item span {
+      font-size: 10.5px;
+      font-weight: 500;
+    }
+
+    .cert-item small {
+      display: block;
+      font-size: 9px;
+      color: var(--gray);
+      font-weight: 300;
+    }
+
+    /* 인쇄 스타일 */
+    @media print {
+      body { background: white; }
+      .page { margin: 0; padding: 14mm 16mm; }
+      input { border-color: #ddd !important; }
+    }
+
+    .print-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      padding: 12px 24px;
+      font-family: 'Noto Sans KR', sans-serif;
+      font-size: 12px;
+      letter-spacing: 2px;
+      cursor: pointer;
+      z-index: 999;
+    }
+
+    .print-btn:hover { background: var(--accent); color: var(--black); }
+
+    @media print {
+      .print-btn { display: none; }
+    }
+  </style>
 </head>
 <body>
-$END$
+
+<button class="print-btn" onclick="window.print()">PDF 저장 →</button>
+
+<!-- 표지 -->
+<div class="page cover">
+  <div class="cover-top">
+    <span class="cover-label">Portfolio</span>
+    <span class="cover-year">2026</span>
+  </div>
+
+  <div class="cover-center">
+    <div class="cover-position">FD · CONTENTS CREATOR</div>
+    <div class="cover-title">
+      열기를<br>담는<br><em>사람</em>
+    </div>
+    <div class="cover-divider"></div>
+    <div class="cover-subtitle">
+      공연 현장의 열기를 콘텐츠로 전달하는<br>
+      영상 제작자 포트폴리오
+    </div>
+  </div>
+
+  <div class="cover-info-grid">
+    <div class="cover-info-item">
+      <label>Name</label>
+      <input type="text" placeholder="이소영">
+    </div>
+    <div class="cover-info-item">
+      <label>Contact</label>
+      <input type="text" placeholder="010-7356-0250">
+    </div>
+    <div class="cover-info-item">
+      <label>Email</label>
+      <input type="text" placeholder="soyoung0985@naver.com">
+    </div>
+  </div>
+</div>
+
+<!-- 2페이지: 소개 + 경험 -->
+<div class="page page-break">
+
+  <!-- 나를 한눈에 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">01</span>
+      <span class="section-title">나를 한눈에</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="intro-box">
+      <div class="intro-text">
+        <input type="text" placeholder="콘텐츠 소비자와 직접 소통했던 경험을 살려, 화면 밖 너머까지 콘텐츠를 전달하겠습니다.">
+      </div>
+    </div>
+
+    <div class="keywords">
+      <span class="keyword"># 현장감</span>
+      <span class="keyword"># 영상편집</span>
+      <span class="keyword"># 콘텐츠기획</span>
+      <span class="keyword"># 실행력</span>
+      <span class="keyword"># 소통</span>
+    </div>
+  </div>
+
+  <!-- 경험 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">02</span>
+      <span class="section-title">경험</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-date">
+        <strong>NOL THEATRE</strong>
+        2024.03<br>~ 2025.08
+      </div>
+      <div class="exp-content">
+        <h3>공연장 현장 운영 · 티켓 관리</h3>
+        <p>뮤지컬·콘서트 전용 공연장에서 약 1년 5개월간 티켓 관리 및 현장 운영 전반을 담당. 공연마다 달라지는 관객 규모와 돌발 상황에 즉각 대응하며 현장 감각과 빠른 판단력을 체득.</p>
+        <div class="exp-tags">
+          <span class="exp-tag">현장운영</span>
+          <span class="exp-tag">티켓관리</span>
+          <span class="exp-tag">관객응대</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-date">
+        <strong>한국뮤지컬협회</strong>
+        2022.05<br>~ 2022.11
+      </div>
+      <div class="exp-content">
+        <h3>창의인재 멘토멘티 · 기획파트</h3>
+        <p>쇼케이스 보도자료 초안 작성, 티켓 오픈 및 판매 관리, 현장 운영 전반 담당. 한국뮤지컬어워즈 현장 보조 및 제작팀 업무도 추가 경험. 프로그램북 참여자 명단에 이름 등재.</p>
+        <div class="exp-tags">
+          <span class="exp-tag">보도자료작성</span>
+          <span class="exp-tag">콘텐츠기획</span>
+          <span class="exp-tag">이벤트운영</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-date">
+        <strong>학생회</strong>
+        2016.12<br>~ 2017.11
+      </div>
+      <div class="exp-content">
+        <h3>학과 학생회장 · 집행부원(과대)</h3>
+        <p>학과 행사 기획·운영, 교수님·학우 간 소통 조율. 행사 포스터 및 대자보 제작을 위해 포토샵을 독학으로 익혀 활용. 신뢰 기반의 리더십으로 자발적 참여 이끌어낸 경험.</p>
+        <div class="exp-tags">
+          <span class="exp-tag">행사기획</span>
+          <span class="exp-tag">리더십</span>
+          <span class="exp-tag">포토샵</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- 3페이지: 역량 + 작업물 + 자격 -->
+<div class="page page-break">
+
+  <!-- 역량 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">03</span>
+      <span class="section-title">역량</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="skill-grid">
+      <div class="skill-item">
+        <h4>영상편집 · KBS아카데미 수료</h4>
+        <p>파이널컷 및 프리미어프로 과정 수료. 기획·촬영·편집·업로드 전 과정 독립 수행 가능.</p>
+      </div>
+      <div class="skill-item">
+        <h4>데이터 관리 · MOS Excel Expert</h4>
+        <p>MOS 엑셀 Expert 자격증 보유. 데이터 정리 및 관리 업무에 즉시 활용 가능.</p>
+      </div>
+      <div class="skill-item">
+        <h4>콘텐츠 기획 · 보도자료 작성</h4>
+        <p>뮤지컬협회 기획파트에서 보도자료 작성 및 콘텐츠 홍보 실무 경험.</p>
+      </div>
+      <div class="skill-item">
+        <h4>현장 소통 · 운영 경험</h4>
+        <p>공연장 1년 5개월 현장 운영 경험. 돌발상황 대응 및 관객 응대 능력 보유.</p>
+      </div>
+      <div class="skill-item">
+        <h4>Java · Oracle · HTML/CSS 기초 활용 가능</h4>
+        <p>SMU UNIVERSE 콘텐츠 엔지니어 8기 과정 수강. <br> 데이터 관리 및 웹 구조에 대한 기술적 이해 보유</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 작업물 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">04</span>
+      <span class="section-title">작업물</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="work-box">
+      <div class="work-qr">
+          <img src=".idea/img/MFpoKq.png" alt="유튜브 연결 QR">
+      </div>
+      <div class="work-desc">
+        <h4>직접 편집한 영상 모음</h4>
+        <p>기획 · 촬영 · 편집 · 업로드 전 과정을 혼자 수행한 영상 작업물입니다.<br>파이널컷 및 프리미어프로 활용.</p>
+        <div class="work-url">
+<!--          <input type="text" placeholder="유튜브 링크를 입력하세요 (예: youtube.com/...)">-->
+          <a href="https://youtube.com/channel/UCQbcTjXj4jYG9EG-JtW5TrQ?si=rTrfL54rhsPy3UPj" target="_blank">
+            동에번쩍 서에번쩍 쏘길동
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 자격·면허 -->
+  <div class="section">
+    <div class="section-header">
+      <span class="section-num">05</span>
+      <span class="section-title">자격 · 면허</span>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="cert-list">
+      <div class="cert-item">
+        <div class="cert-dot"></div>
+        <div>
+          <span>MOS Excel Expert</span>
+          <small>Microsoft Office Specialist</small>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-dot"></div>
+        <div>
+          <span>KBS아카데미 영상편집 수료</span>
+          <small>파이널컷 · 프리미어프로</small>
+        </div>
+      </div>
+      <div class="cert-item">
+        <div class="cert-dot"></div>
+        <div>
+          <span>TOEIC Speaking IM2</span>
+          <small>ETS</small>
+        </div>
+      </div>
+      <div class="cert-item" style="border: 1px dashed #ccc;">
+        <div class="cert-dot" style="background: #ccc;"></div>
+        <div>
+          <input type="text" style="border:none; border-bottom: 1px solid #ddd; font-family:'Noto Sans KR'; font-size:10.5px; outline:none; width:100%;" placeholder="추가 자격증 입력">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
 </body>
 </html>
